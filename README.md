@@ -6,6 +6,7 @@ plan:
 . build basic structure
 . get several different backgrounds (fog, rain, snow, sunny (desert, LA palm trees), fluffy clouds)
 . javascript: get current geo-location
+. convert lat/long to city/country
 . get auth key for WU
 . connect to Weather underground API
 . display different background image depending on weather
