@@ -28,7 +28,9 @@ function geoFindMe() {
     var output = document.getElementById("location");
 
     if (!navigator.geolocation){
-        output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+        var googleGeoCall = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCWHdbXU_VHFs3YGAKzfCN5A4t8MlxFlzM";
+        console.log(getJSON(googleGeoCall));
+
         return;
     }
 
