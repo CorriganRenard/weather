@@ -58,22 +58,17 @@ function geoFindMe() {
             document.getElementById("temp").innerHTML = tempF + "&#8457;";
             document.getElementById("weather").innerHTML = newWeather;
 
-            switch(newWeather.toLowerCase()) {
-                case "partly cloudy":
-                case "mostly cloudy":
-                case "scattered clouds":
-                    document.getElementById("my-video").innerHTML = "<source src='media/" + "clouds" + ".mp4' type='video/mp4' />";
-                    break;
-                case "clear":
-                    document.getElementById("my-video").innerHTML = "<source src='media/" + "sun" + ".mp4' type='video/mp4' />";
-                    break;
-                case "rain":
-                case "showers":
-                case "scattered showers":
-                    document.getElementById("my-video").innerHTML = "<source src='media/" + "rain" + ".mp4' type='video/mp4' />";
-                    break;
-            }
+            if(/cloud/.test(newWeather.toLowerCase())){
+                document.getElementById("my-video").innerHTML = "<source src='media/" + "clouds" + ".mp4' type='video/mp4' />";
+            }else if(/clear/.test(newWeather.toLowerCase())){
+                document.getElementById("my-video").innerHTML = "<source src='media/" + "sun" + ".mp4' type='video/mp4' />";
 
+            }else if(/rain/.test(newWeather.toLowerCase()) || /shower/.test(newWeather.toLowerCase())){
+            document.getElementById("my-video").innerHTML = "<source src='media/" + "rain" + ".mp4' type='video/mp4' />";
+            }
+            else {
+                document.getElementById("my-video").innerHTML = "<source src='media/" + "sun" + ".mp4' type='video/mp4' />";
+            }
         });
 
 /*        var request = new XMLHttpRequest();
