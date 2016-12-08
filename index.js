@@ -76,8 +76,8 @@ ready(function(){
         var arrayOfLocation = location.results[2].formatted_address.split(',');
         console.log(arrayOfLocation[0]);
 
-        var currentCity = arrayOfLocation[0];
-        var currentState = arrayOfLocation[1];
+        currentCity = arrayOfLocation[0];
+        currentState = arrayOfLocation[1];
         var currentCountry = arrayOfLocation[2];
 
         document.getElementById("location").innerHTML = currentCity + ", " + currentCountry;
@@ -91,7 +91,7 @@ ready(function(){
 
         document.getElementById("tempF").innerHTML = tempF + "&#8457;";
         document.getElementById("tempC").innerHTML = tempC + "&#8451;";
-        document.getElementById("weather").innerHTML = newWeather;
+        document.getElementById("weather").innerHTML = "Currently: " + newWeather;
 
         if(/cloud/.test(newWeather.toLowerCase())){
              document.getElementById("my-video").innerHTML = "<source src='media/" + "clouds" + ".mp4' type='video/mp4' />";
@@ -101,9 +101,32 @@ ready(function(){
              document.getElementById("my-video").innerHTML = "<source src='media/" + "rain" + ".mp4' type='video/mp4' />";
         }else if(/snow/.test(newWeather.toLowerCase())) {
             document.getElementById("my-video").innerHTML = "<source src='media/" + "snow" + ".mp4' type='video/mp4' />";
+        }else if(/ice/.test(newWeather.toLowerCase())) {
+            document.getElementById("my-video").innerHTML = "<source src='media/" + "ice" + ".mp4' type='video/mp4' />";
+
         }else {
             document.getElementById("my-video").innerHTML = "<source src='media/" + "sun" + ".mp4' type='video/mp4' />";
         }
+
+        getJSON("http://api.wunderground.com/api/5a694fc57c2ac66a/alerts/q/" +
+            currentState.trim() + "/" + currentCity.replace(/ /g,"_").trim() + ".json").then(function(alerts){
+            for(var key in alerts){
+                if(alerts.hasOwnProperty(key)) {
+                    for(var i in alerts[key]){
+                        if(alerts[key][i]["description"]) {
+                            var el = document.getElementById("alert-container");
+                            el.innerHTML += "<div class='alert'>" + alerts[key][i]["description"] + "</div>";
+                            console.log(alerts[key][i]["description"]);
+                            console.log(alerts[key][i]["message"]);
+                        }
+
+                    }
+                }
+            }
+
+            });
+
+
     });
     });
 
