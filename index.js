@@ -91,7 +91,7 @@ ready(function(){
 
         document.getElementById("tempF").innerHTML = tempF + "&#8457;";
         document.getElementById("tempC").innerHTML = tempC + "&#8451;";
-        document.getElementById("weather").innerHTML = "Currently: " + newWeather;
+        document.getElementById("weather").innerHTML = "Conditions: " + newWeather;
 
         if(/cloud/.test(newWeather.toLowerCase())){
              document.getElementById("my-video").innerHTML = "<source src='media/" + "clouds" + ".mp4' type='video/mp4' />";
@@ -103,33 +103,56 @@ ready(function(){
             document.getElementById("my-video").innerHTML = "<source src='media/" + "snow" + ".mp4' type='video/mp4' />";
         }else if(/ice/.test(newWeather.toLowerCase())) {
             document.getElementById("my-video").innerHTML = "<source src='media/" + "ice" + ".mp4' type='video/mp4' />";
-
         }else {
             document.getElementById("my-video").innerHTML = "<source src='media/" + "sun" + ".mp4' type='video/mp4' />";
         }
 
         getJSON("http://api.wunderground.com/api/5a694fc57c2ac66a/alerts/q/" +
-            currentState.trim() + "/" + currentCity.replace(/ /g,"_").trim() + ".json").then(function(alerts){
-            for(var key in alerts){
+            currentState.trim() + "/" + currentCity.replace(/ /g,"_").trim() + ".json")
+            .then(function(alerts){
+                for(var key in alerts){
                 if(alerts.hasOwnProperty(key)) {
                     for(var i in alerts[key]){
                         if(alerts[key][i]["description"]) {
-                            var el = document.getElementById("alert-container");
-                            el.innerHTML += "<div class='alert'>" + alerts[key][i]["description"] + "</div>";
-                            console.log(alerts[key][i]["description"]);
-                            console.log(alerts[key][i]["message"]);
+                            var alert = document.getElementById("alert-container");
+                            var modal = document.getElementById("overlay");
+                            alert.innerHTML += "<div class='alert' id='alert-" + i + "'>" + alerts[key][i]["description"] + "</div>";
+                            modal.innerHTML += "<div style='display: none' class='alert-modal' id='alert-modal-" + i + "'><span class='alert-exit' id='exit-" + i + "'>X</span>" + alerts[key][i]["message"] + "</div>";
                         }
-
                     }
                 }
             }
-
-            });
-
-
+        }).then(function(){
+            toggleAlert();
+        });
     });
     });
+//toggle class on/off
 
+    function toggleAlert(){
+        var myNodeList = document.getElementsByClassName("alert");
+        console.log(myNodeList.length);
+        for(var i=0; i<myNodeList.length; i++ ) {
+            var targetShow = document.getElementById("alert-" + i);
+            var targetHide = document.getElementById("exit-" + i);
+            var action = document.getElementById("alert-modal-" + i);
+            targetShow.addEventListener("click", toggleShow(action));
+            targetHide.addEventListener("click", toggleHide(action));
+            function toggleShow(el){
+                return function() {
+                    el.style.display = '';
+                };
+            }
+            function toggleHide(el){
+                return function() {
+                    el.style.display = 'none';
+                };
+            }
+
+        }
+    }
+
+//toggle c/f measurement
     var tempF = document.getElementById("tempF");
     var tempC = document.getElementById("tempC");
     tempF.addEventListener("click", toggleToC);
