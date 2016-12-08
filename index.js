@@ -1,6 +1,8 @@
 
 
 // document ready function
+
+
 function ready(fn) {
     if (document.readyState != 'loading') {
         fn();
@@ -87,7 +89,8 @@ ready(function(){
         var tempC = localWeather.current_observation.temp_c;
         var tempF = localWeather.current_observation.temp_f;
 
-        document.getElementById("temp").innerHTML = tempF + "&#8457;";
+        document.getElementById("tempF").innerHTML = tempF + "&#8457;";
+        document.getElementById("tempC").innerHTML = tempC + "&#8451;";
         document.getElementById("weather").innerHTML = newWeather;
 
         if(/cloud/.test(newWeather.toLowerCase())){
@@ -96,12 +99,44 @@ ready(function(){
              document.getElementById("my-video").innerHTML = "<source src='media/" + "sun" + ".mp4' type='video/mp4' />";
         }else if(/rain/.test(newWeather.toLowerCase()) || /shower/.test(newWeather.toLowerCase())){
              document.getElementById("my-video").innerHTML = "<source src='media/" + "rain" + ".mp4' type='video/mp4' />";
-                }
-        else {
+        }else if(/snow/.test(newWeather.toLowerCase())) {
+            document.getElementById("my-video").innerHTML = "<source src='media/" + "snow" + ".mp4' type='video/mp4' />";
+        }else {
             document.getElementById("my-video").innerHTML = "<source src='media/" + "sun" + ".mp4' type='video/mp4' />";
         }
     });
     });
+
+    var tempF = document.getElementById("tempF");
+    var tempC = document.getElementById("tempC");
+    tempF.addEventListener("click", toggleToC);
+    tempC.addEventListener("click", toggleToF);
+    function toggleToC(){
+
+        //remove class
+        if (tempC.classList)
+            tempC.classList.remove("hide");
+        else
+            tempC.className = tempF.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+        //add class
+        if (tempF.classList)
+            tempF.classList.add("hide");
+        else
+            tempF.className += ' ' + className;
+    }
+    function toggleToF(){
+        //remove class
+        if (tempF.classList)
+            tempF.classList.remove("hide");
+        else
+            tempF.className = tempF.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+        //add class
+        if (tempC.classList)
+            tempC.classList.add("hide");
+        else
+            tempC.className += ' ' + className;
+    }
+
 });
 
 

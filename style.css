@@ -75,3 +75,6 @@ body {
     height: auto;
     background-color: blue;
 }
+.hide {
+    display: none; !important
+}
