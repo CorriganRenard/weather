@@ -100,16 +100,18 @@ body {
     transform: translate(-50%, -50%);
     min-width: 200px;
     min-height: 200px;
-    width: auto;
-    max-height: 200px;
+    width: 600px;
+    height: auto;
+    max-height: 400px;
+    max-width: 600px;
     background:
         /* transparent blue, faked with gradient */
             linear-gradient(
-                    rgba(20, 20, 20, 0.85),
-                    rgba(20, 20, 20, 0.85)
+                    rgba(20, 20, 20, 0.92),
+                    rgba(20, 20, 20, 0.92)
             );
     border: solid 2px rgb(255,0,0);
-    overflow: scroll;
+    overflow: hidden;
 }
 
 .alert-exit{
