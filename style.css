@@ -18,6 +18,20 @@ body {
 body {
     font-family: "Oxygen", sans-serif;
 }
+#banner{
+    position: fixed;
+    top: 5px;
+    left: 10px;
+}
+#my-logo{
+    background-image: url("media/crlogo.png");
+    z-index: 5;
+    height: 39px;
+    width: 180px;
+    display: inline-block;
+    position: static;
+
+}
 .cover  {
     position: fixed;
     top: 50%; left: 50%;
@@ -29,7 +43,7 @@ body {
     height: auto;
 
     background:
-        /* transparent blue, faked with gradient */
+        /* transparent grey, faked with gradient */
             linear-gradient(
                     rgba(0, 0, 0, 0.75),
                     rgba(0, 0, 0, 0.75)
@@ -85,7 +99,7 @@ body {
 .alert:hover{
     cursor: pointer;
     background:
-        /* transparent blue, faked with gradient */
+        /* transparent red, faked with gradient */
             linear-gradient(
                     rgba(255, 0, 0, 0.05),
                     rgba(255, 0, 0, 0.05)
@@ -132,8 +146,31 @@ body {
     min-height: 100%;
     width: auto;
     height: auto;
-    background-color: grey;
+    background-color: black;
 }
 .hide {
     display: none; !important
 }
+@media (max-width: 800px){
+
+
+    .cover  {
+
+        background:
+            /* transparent grey, faked with gradient */
+                linear-gradient(
+                        rgba(0, 0, 0, 1),
+                        rgba(0, 0, 0, 1)
+                )
+    }
+    .alert-modal{
+        transform: translate(-50%, -50%);
+        width: 300px;
+        max-height: 400px;
+    }
+
+
+    .video {
+        display: none;
+    }
+    }

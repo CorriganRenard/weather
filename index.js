@@ -93,8 +93,12 @@ ready(function(){
         document.getElementById("weather").innerHTML = "Conditions: " + newWeather;
         document.getElementById("location").innerHTML = city + ", " + state + ", " + country;
 
-        if(/cloud/.test(newWeather.toLowerCase()) || /overcast/.test(newWeather.toLowerCase())){
+        if(/cloud/.test(newWeather.toLowerCase())){
              document.getElementById("my-video").innerHTML = "<source src='media/" + "clouds" + ".mp4' type='video/mp4' />";
+        }else if(/overcast/.test(newWeather.toLowerCase()) || /fog/.test(newWeather.toLowerCase())){
+            document.getElementById("my-video").innerHTML = "<source src='media/" + "overcast" + ".mp4' type='video/mp4' />";
+        }else if(/lightning/.test(newWeather.toLowerCase()) || /thunder/.test(newWeather.toLowerCase())){
+            document.getElementById("my-video").innerHTML = "<source src='media/" + "lightning" + ".mp4' type='video/mp4' />";
         }else if(/clear/.test(newWeather.toLowerCase())){
              document.getElementById("my-video").innerHTML = "<source src='media/" + "sun" + ".mp4' type='video/mp4' />";
         }else if(/rain/.test(newWeather.toLowerCase()) || /shower/.test(newWeather.toLowerCase())){
