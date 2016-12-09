@@ -20,8 +20,9 @@ body {
 }
 #banner{
     position: fixed;
-    top: 5px;
-    left: 10px;
+    top: 20px;
+    left: 20px;
+    z-index: 4;
 }
 #my-logo{
     background-image: url("media/crlogo.png");
@@ -30,7 +31,15 @@ body {
     width: 180px;
     display: inline-block;
     position: static;
-
+}
+#wu-logo{
+    background-image: url("media/wunderground.jpg");
+    z-index: 5;
+    margin-left: 20px;
+    height: 39px;
+    width: 180px;
+    display: inline-block;
+    position: static;
 }
 .cover  {
     position: fixed;
