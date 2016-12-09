@@ -60,40 +60,40 @@ function getJSON(url) {
 }
 
 ready(function(){
+    var latitude = 0;
+    var longitude = 0;
+
     var output = document.getElementById("location");
     var googleGeoCall = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyASVfZYVgDPEiUpwiopNYZtxmMGAfxuoPw";
 
     postJSON(googleGeoCall).then(function(position) {
 
-        var latitude = position.location.lat;
-        var longitude = position.location.lng;
+        latitude = position.location.lat;
+        longitude = position.location.lng;
 
-        var geoApiCall = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=AIzaSyCWHdbXU_VHFs3YGAKzfCN5A4t8MlxFlzM"
-        return geoApiCall;
-    }).then(function(getCity){
 
-        getJSON(getCity).then(function(location){
-        var arrayOfLocation = location.results[2].formatted_address.split(',');
-        console.log(arrayOfLocation[0]);
 
-        currentCity = arrayOfLocation[0];
-        currentState = arrayOfLocation[1];
-        var currentCountry = arrayOfLocation[2];
 
-        document.getElementById("location").innerHTML = currentCity + ", " + currentCountry;
 
-        return weatherData = getJSON("http://api.wunderground.com/api/5a694fc57c2ac66a/conditions/q/" + currentState.trim() + "/" + currentCity.replace(/ /g,"_").trim() + ".json");
+        return weatherData = getJSON("http://api.wunderground.com/api/5a694fc57c2ac66a/conditions/q/" + latitude + "," + longitude + ".json");
     }).then(function(localWeather){
         console.log(localWeather.current_observation);
         var newWeather = localWeather.current_observation.weather;
         var tempC = localWeather.current_observation.temp_c;
         var tempF = localWeather.current_observation.temp_f;
+            var city = localWeather.current_observation.display_location.city;
+            var state = localWeather.current_observation.display_location.state_name;
+            var country = localWeather.current_observation.display_location.country;
 
+
+
+            console.log(localWeather);
         document.getElementById("tempF").innerHTML = tempF + "&#8457;";
         document.getElementById("tempC").innerHTML = tempC + "&#8451;";
         document.getElementById("weather").innerHTML = "Conditions: " + newWeather;
+        document.getElementById("location").innerHTML = city + ", " + state + ", " + country;
 
-        if(/cloud/.test(newWeather.toLowerCase())){
+        if(/cloud/.test(newWeather.toLowerCase()) || /overcast/.test(newWeather.toLowerCase())){
              document.getElementById("my-video").innerHTML = "<source src='media/" + "clouds" + ".mp4' type='video/mp4' />";
         }else if(/clear/.test(newWeather.toLowerCase())){
              document.getElementById("my-video").innerHTML = "<source src='media/" + "sun" + ".mp4' type='video/mp4' />";
@@ -108,7 +108,7 @@ ready(function(){
         }
 
         getJSON("http://api.wunderground.com/api/5a694fc57c2ac66a/alerts/q/" +
-            currentState.trim() + "/" + currentCity.replace(/ /g,"_").trim() + ".json")
+            latitude + "," + longitude + ".json")
             .then(function(alerts){
                 for(var key in alerts){
                 if(alerts.hasOwnProperty(key)) {
@@ -117,7 +117,7 @@ ready(function(){
                             var alert = document.getElementById("alert-container");
                             var modal = document.getElementById("overlay");
                             alert.innerHTML += "<div class='alert' id='alert-" + i + "'>" + alerts[key][i]["description"] + "</div>";
-                            modal.innerHTML += "<div style='display: none' class='alert-modal' id='alert-modal-" + i + "'><span class='alert-exit' id='exit-" + i + "'>X</span>" + alerts[key][i]["message"] + "</div>";
+                            modal.innerHTML += "<div style='display: none' class='alert-modal' id='alert-modal-" + i + "'><span class='alert-exit' id='exit-" + i + "'>x</span>" + alerts[key][i]["message"] + "</div>";
                         }
                     }
                 }
@@ -125,7 +125,6 @@ ready(function(){
         }).then(function(){
             toggleAlert();
         });
-    });
     });
 //toggle class on/off
 
