@@ -33,12 +33,11 @@ body {
     display: inline-block;
     position: static;
 }
+
 #wu-logo{
     background-image: url("media/wunderground.jpg");
     z-index: 5;
     margin-left: 20px;
-    height: 39px;
-    width: 180px;
     display: inline-block;
     position: static;
 }
@@ -121,12 +120,11 @@ body {
     position: absolute;
     top: 50%; left: 50%;
     z-index: 3;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -30%);
     min-width: 200px;
     min-height: 200px;
     width: 600px;
     height: auto;
-    max-height: 400px;
     max-width: 600px;
     background:
         /* transparent blue, faked with gradient */
@@ -176,7 +174,6 @@ body {
     .alert-modal{
         transform: translate(-50%, -50%);
         width: 300px;
-        max-height: 400px;
     }
 
 

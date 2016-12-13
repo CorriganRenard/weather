@@ -114,6 +114,7 @@ ready(function(){
         getJSON("http://api.wunderground.com/api/5a694fc57c2ac66a/alerts/q/" +
             latitude + "," + longitude + ".json")
             .then(function(alerts){
+                console.log(alerts);
                 for(var key in alerts){
                 if(alerts.hasOwnProperty(key)) {
                     for(var i in alerts[key]){
